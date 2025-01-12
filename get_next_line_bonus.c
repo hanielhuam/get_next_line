@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmacedo- <hmacedo-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:46:34 by hmacedo-          #+#    #+#             */
-/*   Updated: 2025/01/11 22:53:45 by hmacedo-         ###   ########.fr       */
+/*   Updated: 2025/01/11 23:00:35 by hmacedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*verify_line(t_line **line)
 {
@@ -98,45 +98,63 @@ int	read_file(t_line *line, int fd)
 
 char	*get_next_line(int fd)
 {
-	static t_line	*line;
+	static t_line	*line[1024];
 	char			*l;
 	t_line			*temp;
 
-	if (!line)
+	if (!line[fd])
 	{
-		line = creat_t_line(NULL, 0, 0);
-		if (!line)
+		line[fd] = creat_t_line(NULL, 0, 0);
+		if (!line[fd])
 			return (NULL);
 	}
-	l = verify_line(&line);
+	l = verify_line(&line[fd]);
 	if (l)
 		return (l);
-	if (read_file(line, fd))
+	if (read_file(line[fd], fd))
 		return (NULL);
-	if (!line)
+	if (!line[fd])
 		return (NULL);
-	l = line->str;
-	temp = line;
-	line = line->next;
+	l = line[fd]->str;
+	temp = line[fd];
+	line[fd] = line[fd]->next;
 	free(temp);
 	return (l);
 }
+
 /*
 #include <fcntl.h>
 #include <stdio.h>
+
 int	main(void)
 {
-	int		fd;
+	int		fd1;
+	int		fd2;
+	int		fd3;
 	char	*str;
 
-	fd = open("teste.txt", O_RDONLY);
-	str = get_next_line(fd);
-	while (str)
-	{
-		printf("%s", str);
-		free(str);
-		str = get_next_line(fd);
-	}
-	close(fd);
+	fd1 = open("teste1.txt", O_RDONLY);
+	fd2 = open("teste2.txt", O_RDONLY);
+	fd3 = open("teste3.txt", O_RDONLY);
+	
+	str = get_next_line(fd1);
+	printf("%s", str);
+	free(str);
+	
+	str = get_next_line(fd2);
+	printf("%s", str);
+	free(str);
+	
+	str = get_next_line(fd1);
+	printf("%s", str);
+	free(str);
+	
+	str = get_next_line(fd3);
+	printf("%s", str);
+	free(str);
+	
+	close(fd1);
+	close(fd2);
+	close(fd3);
 	return (0);
 }*/

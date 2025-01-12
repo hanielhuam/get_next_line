@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmacedo- <hmacedo-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 21:17:51 by hmacedo-          #+#    #+#             */
-/*   Updated: 2025/01/11 22:22:19 by hmacedo-         ###   ########.fr       */
+/*   Updated: 2025/01/11 23:02:33 by hmacedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 t_line	*creat_t_line(char *str, ssize_t size, char ok)
 {
